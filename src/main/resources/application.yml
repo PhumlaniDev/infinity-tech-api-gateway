@@ -1,0 +1,35 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    config:
+      uri: http://config-server:8888
+    gateway:
+      routes:
+        - id: auth-service
+          uri: http://auth-service:9000
+          predicates:
+            - Path=/api/auth/**
+
+        - id: product-service
+          uri: http://product-service:9100
+          predicates:
+            - Path=/api/products/**
+
+        - id: cart-service
+          uri: http://cart-service:9200
+          predicates:
+              - Path=/api/carts/**
+
+        - id: order-service
+          uri: http://order-service:9300
+          predicates:
+              - Path=/api/orders/**
+
+        - id: payment-service
+          uri: http://payment-service:9400
+          predicates:
+              - Path=/api/payments/**
+
+      default-filters:
+        - AddRequestHeader=X-Response-Time, ${date}
