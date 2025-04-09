@@ -1,35 +1,86 @@
 server:
   port: 8081
 spring:
+  application:
+    name: api-gateway
+  config:
+    import: optional:configserver:http://config-server:8888
   cloud:
-    config:
-      uri: http://config-server:8888
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http:localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeader: "*"
       routes:
         - id: auth-service
           uri: http://auth-service:9000
           predicates:
-            - Path=/api/auth/**
+              - Path=/api/auth/**
 
         - id: product-service
           uri: http://product-service:9100
           predicates:
             - Path=/api/products/**
+          filters:
+            - RequestRateLimiter
+            - name: CircuitBreaker
+              args:
+                name: productServiceCircuitBreaker
+                fallbackUri: forward:/fallback/product
 
         - id: cart-service
           uri: http://cart-service:9200
           predicates:
-              - Path=/api/carts/**
+            - Path=/api/carts/**
 
         - id: order-service
           uri: http://order-service:9300
           predicates:
-              - Path=/api/orders/**
+            - Path=/api/orders/**
 
         - id: payment-service
           uri: http://payment-service:9400
           predicates:
-              - Path=/api/payments/**
-
+            - Path=/api/payments/**
       default-filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenish-rate: 10
+            redis-rate-limiter.burst-capacity: 20
+            redis-rate-limiter.requestedTokens: 1
+        - AddResponseHeader=X-Gateway-Response, Passed-through-API-Gateway
         - AddRequestHeader=X-Response-Time, ${date}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+  keycloak:
+    auth-server-url: http://localhost:8080
+    realm: mac-apps
+    resource: infinity-tech-api
+    principle-attribute: preferred_username
+    credentials:
+      secret: ENC(kcYV8v/y4d4F+R4ZI5H7Ak74BSfx1lRQ1JG5BpLhcdGLN/XP2EfdxebTVZ2mJD6Oh0LNCqVP87bwzOUmUNZpKdBUthYKMc0ZO3Zspv1OFMg=)
+    admin:
+      username: testuser
+      password: TGsj4vb5knipd1
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    sampling:
+        probability: 1.0
+  zipkin:
+    base-url: http://zipkin:9411
