@@ -1,4 +1,4 @@
-package com.phumlanidev.infinity_tech_config_api_gateway.controller;
+package com.phumlanidev.api_gateway.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
