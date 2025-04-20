@@ -1,10 +1,6 @@
 server:
   port: 8081
 spring:
-  application:
-    name: api-gateway
-  config:
-    import: optional:configserver:http://localhost:8888
   cloud:
     gateway:
       globalcors:
@@ -20,12 +16,12 @@ spring:
             allowedHeader: "*"
       routes:
         - id: auth-service
-          uri: http://auth-service:9000
+          uri: http://localhost:9000
           predicates:
               - Path=/api/auth/**
 
         - id: product-service
-          uri: http://product-service:9100
+          uri: http://localhost:9100
           predicates:
             - Path=/api/products/**
           filters:
@@ -36,17 +32,17 @@ spring:
                 fallbackUri: forward:/fallback/product
 
         - id: cart-service
-          uri: http://cart-service:9200
+          uri: http://localhost:9200
           predicates:
             - Path=/api/carts/**
 
         - id: order-service
-          uri: http://order-service:9300
+          uri: http://localhost:9300
           predicates:
             - Path=/api/orders/**
 
         - id: payment-service
-          uri: http://payment-service:9400
+          uri: http://localhost:9400
           predicates:
             - Path=/api/payments/**
       default-filters:
