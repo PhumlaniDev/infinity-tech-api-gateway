@@ -19,6 +19,8 @@ public class SecurityConfig {
                     .pathMatchers("/actuator/**").permitAll()
                     .pathMatchers("/v3/api-docs/**").permitAll()
                     .pathMatchers("/swagger-ui/**").permitAll()
+                    .pathMatchers("/api/auth/**").permitAll()
+                    .pathMatchers("/api/v1/product/**").permitAll()
                     .pathMatchers("/swagger-resources/**").permitAll()
                     .anyExchange().authenticated()
             )
