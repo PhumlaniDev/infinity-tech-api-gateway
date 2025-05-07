@@ -20,9 +20,10 @@ public class RoleHeaderFilter extends AbstractGatewayFilterFactory<RoleHeaderFil
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication)
+                .filter(auth -> auth != null && auth.isAuthenticated())
                 .defaultIfEmpty(null)
                 .flatMap(authentication -> {
-                    if (authentication != null && authentication.isAuthenticated()) {
+                    if (authentication != null) {
                         String roles = authentication.getAuthorities().stream()
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.joining(","));
@@ -33,6 +34,7 @@ public class RoleHeaderFilter extends AbstractGatewayFilterFactory<RoleHeaderFil
                     return chain.filter(exchange);
                 });
     }
+
 
 
     public static class Config {
