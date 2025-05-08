@@ -1,5 +1,10 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: api-gateway
   config:
-    import: "configserver:"
+    import: optional:configserver:http://localhost:8888/
+logging:
+  level:
+    org.springframework.cloud: DEBUG
