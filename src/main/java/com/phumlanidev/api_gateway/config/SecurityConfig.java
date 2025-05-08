@@ -20,6 +20,7 @@ public class SecurityConfig {
             .csrf(ServerHttpSecurity.CsrfSpec::disable)
             .authorizeExchange(exchange -> exchange
                     .pathMatchers("/actuator/**").permitAll()
+                    .pathMatchers("/fallback/product").permitAll()
                     .pathMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
                     .pathMatchers("/api/v1/auth/**").permitAll()
                     .pathMatchers("/api/v1/products/**").permitAll()
