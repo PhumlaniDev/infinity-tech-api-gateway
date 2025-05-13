@@ -1,4 +1,4 @@
-package com.phumlanidev.api_gateway;
+package com.phumlanidev.apigateway;
 
 
 

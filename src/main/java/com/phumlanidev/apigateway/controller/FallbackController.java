@@ -1,4 +1,4 @@
-package com.phumlanidev.api_gateway.controller;
+package com.phumlanidev.apigateway.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

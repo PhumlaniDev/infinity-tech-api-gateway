@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.phumlanidev</groupId>
-	<artifactId>api-gateway</artifactId>
+	<artifactId>api_gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>api-gateway</name>
+	<name>api_gateway</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

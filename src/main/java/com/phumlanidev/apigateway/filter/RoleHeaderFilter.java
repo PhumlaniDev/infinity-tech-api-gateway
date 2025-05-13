@@ -1,4 +1,4 @@
-package com.phumlanidev.api_gateway.filter;
+package com.phumlanidev.apigateway.filter;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
