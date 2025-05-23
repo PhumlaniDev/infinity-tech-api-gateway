@@ -160,7 +160,6 @@ jobs:
       description: |
         Checkstyle: `${{ needs.checkstyle.result }}`
         Build: `${{ needs.build.result }}`
-        Unit Tests: `${{ needs.unit-tests.result }}`
         SAST: `${{ needs.sast.result }}`
         SCA: `${{ needs.sca.result }}`
         Commit: `${{ github.sha }}`
