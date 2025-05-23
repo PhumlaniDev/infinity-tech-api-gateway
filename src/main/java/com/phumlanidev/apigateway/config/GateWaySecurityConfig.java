@@ -23,8 +23,10 @@ public class GateWaySecurityConfig {
 
     http.authorizeExchange(exchange -> exchange
                     // Public endpoints
-                    .pathMatchers("/api/v1/products/all", "/api/v1/products/search", "/api/v1/auth/**",
-                            "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**", "/api/v1/products/*/price").permitAll()
+                    .pathMatchers(
+                            "/api/v1/products/all", "/api/v1/products/search", "/api/v1/auth/**",
+                            "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**",
+                            "/api/v1/products/*/price").permitAll()
 
                     // Protected endpoints
                     .pathMatchers("/api/v1/products/**").hasRole("user")

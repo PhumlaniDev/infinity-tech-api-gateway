@@ -9,5 +9,5 @@ RUN ./mvnw package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=builder /app/target/infinity-tech-api-gateway-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/api-gateway-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
