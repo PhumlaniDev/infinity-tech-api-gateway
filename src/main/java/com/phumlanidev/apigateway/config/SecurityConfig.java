@@ -36,7 +36,7 @@ public class SecurityConfig {
 
                     // Protected endpoints
                     .pathMatchers("/api/v1/products/**").hasRole("admin")
-                    .pathMatchers("/api/v1/order/**").authenticated()
+                    .pathMatchers("/api/v1/order/**", "/api/v1/notifications/**").authenticated()
 
                     // Cart endpoints
                     .pathMatchers("/api/v1/cart/**").hasRole("admin")
