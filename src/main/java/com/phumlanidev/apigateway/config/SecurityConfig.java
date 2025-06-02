@@ -28,18 +28,23 @@ public class SecurityConfig {
     http.csrf(ServerHttpSecurity.CsrfSpec::disable);
 
     http.authorizeExchange(exchange -> exchange
-                    // Public endpoints
+                    // Public Product endpoints
                     .pathMatchers(
                             "/api/v1/products/all", "/api/v1/products/search", "/api/v1/auth/**",
                             "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**",
                             "/api/v1/products/*/price").permitAll()
 
-                    // Protected endpoints
+                    // Protected Product endpoints
                     .pathMatchers("/api/v1/products/**").hasRole("admin")
-                    .pathMatchers("/api/v1/order/**", "/api/v1/notifications/**").authenticated()
+
+                    // Order endpoints
+                    .pathMatchers("/api/v1/order/**").authenticated()
 
                     // Cart endpoints
                     .pathMatchers("/api/v1/cart/**").hasRole("admin")
+
+                    // Notification endpoints
+                    .pathMatchers("/api/v1/notifications/**").hasRole("admin")
 
                     // Fallback: everything else must be authenticated
                     .anyExchange().authenticated()
