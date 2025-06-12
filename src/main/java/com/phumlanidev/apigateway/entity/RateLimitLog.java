@@ -16,9 +16,12 @@ public class RateLimitLog {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
+  @Column(name = "ip_address", nullable = false)
   private String ipAddress;
+  @Column(nullable = false)
   private String path;
+  @Column(nullable = false, length = 10)
   private String method;
+  @Column(nullable = false)
   private Instant timestamp;
 }
