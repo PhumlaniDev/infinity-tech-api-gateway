@@ -1,5 +1,5 @@
 CREATE TABLE rate_limit_logs (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     ip_address VARCHAR(50) NOT NULL,
     path VARCHAR(255) NOT NULL,
     method VARCHAR(10) NOT NULL,
