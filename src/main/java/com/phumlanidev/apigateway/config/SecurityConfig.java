@@ -9,9 +9,7 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
-/**
- * Comment: this is the placeholder for documentation.
- */
+
 @Configuration
 @EnableWebFluxSecurity
 @Slf4j
@@ -20,9 +18,6 @@ public class SecurityConfig {
 
   private final JwtAuthConverter jwtAuthConverter;
 
-  /**
-   * Comment: this is the placeholder for documentation.
-   */
   @Bean
   public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
     http.csrf(ServerHttpSecurity.CsrfSpec::disable);
@@ -39,12 +34,19 @@ public class SecurityConfig {
 
                     // Order endpoints
                     .pathMatchers("/api/v1/order/**").authenticated()
+                    .pathMatchers("/api/v1/order/mark-paid").hasRole("order-service-role")
 
                     // Cart endpoints
                     .pathMatchers("/api/v1/cart/**").hasRole("admin")
 
                     // Notification endpoints
-                    .pathMatchers("/api/v1/notifications/**").hasRole("admin")
+                    .pathMatchers("/api/v1/notifications/**").hasRole("notification-service-role")
+
+                    // Payment endpoints
+                    .pathMatchers("/api/v1/payments/**").authenticated()
+
+                    // Stripe endpoints
+                    .pathMatchers("/api/v1/stripe/**").permitAll()
 
                     // Fallback: everything else must be authenticated
                     .anyExchange().authenticated()

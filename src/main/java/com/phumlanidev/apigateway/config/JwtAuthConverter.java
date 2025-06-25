@@ -1,11 +1,5 @@
 package com.phumlanidev.apigateway.config;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
@@ -17,14 +11,14 @@ import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Component
 public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
   @Value("${keycloak.principle-attribute}")
   private String principleAttribute;
-
-  @Value("${keycloak.resource}")
-  private String resourceId;
 
   @Override
   public AbstractAuthenticationToken convert(@NonNull final Jwt jwt) {
@@ -56,20 +50,20 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
   private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
     Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-    if (resourceAccess == null) {
+    if (resourceAccess == null || resourceAccess.isEmpty()) {
       return Set.of();
     }
 
-    Map<String, Object> client = (Map<String, Object>) resourceAccess.get(resourceId);
-    if (client == null || client.get("roles") == null) {
-      return Set.of();
-    }
-
-    Collection<String> clientRoles = (Collection<String>) client.get("roles");
-    return clientRoles.stream()
+    return resourceAccess.values().stream()
+            .filter(o -> o instanceof Map)
+            .map(o -> (Map<?, ?>) o)
+            .filter(client -> client.get("roles") instanceof Collection<?>)
+            .flatMap(client -> ((Collection<?>) client.get("roles")).stream())
+            .filter(role -> role instanceof String)
             .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
             .collect(Collectors.toSet());
   }
+
 
   private Collection<? extends GrantedAuthority> extractTopLevelRoles(Jwt jwt) {
     Collection<String> topRoles = jwt.getClaim("roles");
