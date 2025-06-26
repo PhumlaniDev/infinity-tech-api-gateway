@@ -12,7 +12,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RateLimitLog {
+public class RateIpLimitLog {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

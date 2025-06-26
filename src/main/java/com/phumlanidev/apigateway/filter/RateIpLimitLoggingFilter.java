@@ -1,7 +1,8 @@
 package com.phumlanidev.apigateway.filter;
 
-import com.phumlanidev.apigateway.entity.RateLimitLog;
-import com.phumlanidev.apigateway.repository.RateLimitLogRepository;
+import com.phumlanidev.apigateway.entity.RateIpLimitLog;
+import com.phumlanidev.apigateway.repository.RateIpLimitLogRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +16,12 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Configuration
-public class RateLimitLoggingFilter implements GlobalFilter, Ordered {
+@Slf4j
+public class RateIpLimitLoggingFilter implements GlobalFilter, Ordered {
 
-    private final RateLimitLogRepository repository;
+    private final RateIpLimitLogRepository repository;
 
-    public RateLimitLoggingFilter(RateLimitLogRepository repository) {
+    public RateIpLimitLoggingFilter(RateIpLimitLogRepository repository) {
       this.repository = repository;
     }
 
@@ -29,8 +31,9 @@ public class RateLimitLoggingFilter implements GlobalFilter, Ordered {
         if (exchange.getResponse().getStatusCode() == HttpStatus.TOO_MANY_REQUESTS) {
           ServerHttpRequest request = exchange.getRequest();
           String ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
+          log.warn("🚫 Rate limit hit from IP: {}", ip);
 
-          RateLimitLog log = new RateLimitLog();
+          RateIpLimitLog log = new RateIpLimitLog();
           log.setIpAddress(ip);
           log.setPath(request.getPath().toString());
           log.setMethod(request.getMethod().name());

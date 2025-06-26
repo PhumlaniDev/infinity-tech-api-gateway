@@ -1,8 +1,8 @@
 package com.phumlanidev.apigateway.repository;
 
-import com.phumlanidev.apigateway.entity.RateLimitLog;
+import com.phumlanidev.apigateway.entity.RateIpLimitLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RateLimitLogRepository extends JpaRepository<RateLimitLog, Long> {}
+public interface RateIpLimitLogRepository extends JpaRepository<RateIpLimitLog, Long> {}
