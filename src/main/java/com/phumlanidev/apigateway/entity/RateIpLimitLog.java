@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.Instant;
 
 @Entity
-@Table(name = "rate_limit_logs")
+@Table(name = "rate_ip_limit_logs")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

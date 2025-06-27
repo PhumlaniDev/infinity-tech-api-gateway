@@ -37,7 +37,7 @@ public class SecurityConfig {
                     .pathMatchers("/api/v1/order/mark-paid").hasRole("order-service-role")
 
                     // Cart endpoints
-                    .pathMatchers("/api/v1/cart/**").hasRole("admin")
+                    .pathMatchers("/api/v1/cart/**").authenticated()
 
                     // Notification endpoints
                     .pathMatchers("/api/v1/notifications/**").hasRole("notification-service-role")
