@@ -73,7 +73,6 @@ jobs:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
 
       - name: Build and Tag Docker Image
-        working-directory: api-gateway
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.run_number }} .
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.run_number }} ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:latest
