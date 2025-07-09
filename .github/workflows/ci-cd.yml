@@ -73,10 +73,11 @@ jobs:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
 
       - name: Build and Tag Docker Image
+        working-directory: api-gateway
         run: |
-          docker build -f api-gateway/Dockerfile \
-          -t ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.run_number }} api-gateway/
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.run_number }} .
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.run_number }} ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:latest
+      
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
