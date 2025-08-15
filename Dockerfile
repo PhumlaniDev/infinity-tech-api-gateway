@@ -21,4 +21,4 @@ RUN chown -R appuser:appuser /app
 
 USER appuser
 
-ENTRYPOINT ["loki:3100", "--", "java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
