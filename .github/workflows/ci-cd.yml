@@ -37,7 +37,7 @@ jobs:
     uses: PhumlaniDev/reusable-workflows/.github/workflows/java-maven-sca.yml@main
     with:
       image_tag: ${{ needs.docker.outputs.image_tag }}
-      project_name: auth-service
+      project_name: api-gateway
     secrets: inherit
 
   #  dast:
