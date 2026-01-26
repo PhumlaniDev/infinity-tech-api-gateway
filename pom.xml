@@ -183,32 +183,32 @@
 			</plugin>
 
 			<!-- Checkstyle Plugin -->
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-checkstyle-plugin</artifactId>-->
-<!--				<version>3.2.0</version>-->
-<!--				<dependencies>-->
-<!--					<dependency>-->
-<!--						<groupId>com.puppycrawl.tools</groupId>-->
-<!--						<artifactId>checkstyle</artifactId>-->
-<!--						<version>10.20.1</version>-->
-<!--					</dependency>-->
-<!--				</dependencies>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<phase>validate</phase>-->
-<!--						<goals>-->
-<!--							<goal>check</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--				<configuration>-->
-<!--					&lt;!&ndash; Path to your custom or Google checks configuration &ndash;&gt;-->
-<!--					<configLocation>google_checks.xml</configLocation>-->
-<!--					<failOnViolation>true</failOnViolation>-->
-<!--					<linkXRef>false</linkXRef>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.2.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>10.20.1</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- Path to your custom or Google checks configuration -->
+					<configLocation>google_checks.xml</configLocation>
+					<failOnViolation>true</failOnViolation>
+					<linkXRef>false</linkXRef>
+				</configuration>
+			</plugin>
 
 			<!--  Jacoco  -->
 			<plugin>
