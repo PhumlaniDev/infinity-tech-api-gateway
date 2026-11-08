@@ -6,13 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/fallback")
 public class FallbackController {
 
-  @GetMapping("/fallback/product")
-  public ResponseEntity<String> fallbackProduct() {
+  @GetMapping("/product")
+  public ResponseEntity<Map<String, Object>> fallbackProduct() {
     return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-        .body("Product Service is currently unavailable. Please try again later.");
+        .body(Map.of(
+                "status", 503,
+                "message", "Product Service is currently unavailable. Please try again later."));
   }
 }

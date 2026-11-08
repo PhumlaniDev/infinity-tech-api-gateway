@@ -23,26 +23,24 @@ public class SecurityConfig {
     http.csrf(ServerHttpSecurity.CsrfSpec::disable);
 
     http.authorizeExchange(exchange -> exchange
+
+                    // Infrastructure
+                    .pathMatchers("/api/v1/fallback/**").permitAll()
+                    .pathMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    .pathMatchers("/actuator/health/**", "/actuator/info", "/actuator/prometheus").permitAll()
+
                     // Public Product endpoints
-                    .pathMatchers(
-                            "/api/v1/products/all", "/api/v1/products/search", "/api/v1/auth/**",
-                            "/actuator/**", "/swagger-ui/**", "/v3/api-docs/**",
-                            "/api/v1/products/*/price").permitAll()
+                    .pathMatchers("/api/v1/auth/**").permitAll()
+                    .pathMatchers("/api/v1/stripe/**").permitAll()
+                    .pathMatchers("/api/v1/products/all", "/api/v1/products/search", "/api/v1/products/*/price").permitAll()
 
-                    // Protected Product endpoints
+                    // Specific rules first
+                    .pathMatchers("/api/v1/notifications/**", "/api/v1/order/mark-paid").denyAll()
+
+                    // Authenticated endpoints
                     .pathMatchers("/api/v1/products/**").hasRole("admin")
-
-                    // Order endpoints
                     .pathMatchers("/api/v1/order/**").authenticated()
-                    .pathMatchers("/api/v1/order/mark-paid").hasRole("order-service-role")
-
-                    // Cart endpoints
                     .pathMatchers("/api/v1/cart/**").authenticated()
-
-                    // Notification endpoints
-                    .pathMatchers("/api/v1/notifications/**").hasRole("notification-service-role")
-
-                    // Payment endpoints
                     .pathMatchers("/api/v1/payments/**").authenticated()
 
                     // Stripe endpoints
